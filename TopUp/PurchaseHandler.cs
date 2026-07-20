@@ -11,9 +11,9 @@ namespace TopUp
             _switchService = switchService;
         }
 
-        public Task HandleAsync(Transaction transaction)
+        public async Task<TransactionResponse> HandleAsync(Transaction transaction)
         {
-            return _switchService.ProcessPurchaseAsync(transaction);d
+            return await _switchService.ProcessPurchaseAsync(transaction);
         }
     }
 }

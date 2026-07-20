@@ -27,13 +27,9 @@ namespace TopUp
         public async Task<TransactionResponse> ProcessTopupAsync(Transaction transaction)
         {
             var paymentResult = await _shaparakService.PurchaseAsync(transaction);
-            if (!paymentResult)
+            if (!paymentResult.IsSuccess)
             {
-                return new TransactionResponse
-                {
-                    IsSuccess = false,
-                    Message = "Payment failed"
-                };
+                return paymentResult;
             }
 
             await _queueService.EnqueueAsync<Transaction>("Topup", transaction);
@@ -41,8 +37,8 @@ namespace TopUp
             return new TransactionResponse
             {
                 IsSuccess = true,
-                Message = "Payment accepted",
-                ReferenceNumber = ""
+                Message = "Payment successful. Topup pending",
+                ReferenceNumber = transaction.Id
             };
         }
 
