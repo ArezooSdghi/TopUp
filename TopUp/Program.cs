@@ -1,7 +1,11 @@
+using TopUp;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IQueueService, InMemoryQueueService>();
 
 var app = builder.Build();
 
