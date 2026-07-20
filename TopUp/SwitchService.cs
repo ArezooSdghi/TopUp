@@ -14,6 +14,7 @@ namespace TopUp
 
         public Task AdviceAsync(Guid transactionId)
         {
+            //return _shaparakService.AdviceAsync()
             Console.WriteLine($"Advice sent for {transactionId}");
             return Task.CompletedTask;
         }
@@ -23,9 +24,26 @@ namespace TopUp
             throw new NotImplementedException();
         }
 
-        public Task ProcessTopupAsync(Transaction transaction)
+        public async Task<TransactionResponse> ProcessTopupAsync(Transaction transaction)
         {
-            return _queueService.EnqueueAsync<Transaction>("Topup", transaction);
+            var paymentResult = await _shaparakService.PurchaseAsync(transaction);
+            if (!paymentResult)
+            {
+                return new TransactionResponse
+                {
+                    IsSuccess = false,
+                    Message = "Payment failed"
+                };
+            }
+
+            await _queueService.EnqueueAsync<Transaction>("Topup", transaction);
+
+            return new TransactionResponse
+            {
+                IsSuccess = true,
+                Message = "Payment accepted",
+                ReferenceNumber = ""
+            };
         }
 
         public Task ReverseAsync(Guid transactionId)
