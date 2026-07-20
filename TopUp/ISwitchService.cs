@@ -2,7 +2,7 @@
 {
     public interface ISwitchService
     {
-        Task Advice(Guid transactionId);
-        Task Reverse(Guid transactionId);
+        Task AdviceAsync(Guid transactionId);
+        Task ReverseAsync(Guid transactionId);
     }
 }
