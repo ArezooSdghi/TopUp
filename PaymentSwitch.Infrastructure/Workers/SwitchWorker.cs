@@ -1,4 +1,6 @@
-﻿namespace TopUp
+﻿using Microsoft.Extensions.Hosting;
+
+namespace TopUp
 {
     public class SwitchWorker : BackgroundService
     {

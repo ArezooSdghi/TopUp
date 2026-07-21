@@ -3,12 +3,13 @@ namespace TopUp
 {
     public class SwitchService : ISwitchService
     {
-        
+        private readonly ITransactionDispatcher _dispatcher;
 
-        public Task<OperationResponse> ProcessAsync(Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
+        public SwitchService(ITransactionDispatcher dispatcher)
+            => _dispatcher = dispatcher;
+
+        public async Task<OperationResponse> ProcessAsync(Transaction transaction)
+            => await _dispatcher.DispatchAsync(transaction);
 
         //private readonly IQueueService _queueService;
         //private readonly ILogger<SwitchService> _logger;
