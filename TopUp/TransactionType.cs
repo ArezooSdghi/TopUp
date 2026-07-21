@@ -3,6 +3,8 @@
     public enum TransactionType
     {
         Purchase,
-        Topup
+        Topup,
+        Reverse,
+        Advice
     }
 }

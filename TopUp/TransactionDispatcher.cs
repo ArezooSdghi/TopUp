@@ -5,19 +5,17 @@
         private readonly IEnumerable<ITransactionHandler> _handlers;
 
         public TransactionDispatcher(IEnumerable<ITransactionHandler> handlers)
-        {
-            _handlers = handlers;
-        }
+            => _handlers = handlers;
 
-        public async Task<TransactionResponse> DispatchAsync(Transaction transaction)
+        public async Task<OperationResponse> DispatchAsync(Transaction transaction)
         {
             var handler = _handlers.FirstOrDefault(x => x.Type == transaction.Type);
             if (handler is null)
             {
-                return new TransactionResponse
+                return new OperationResponse
                 {
                     IsSuccess = false,
-                    Message = "Handler not found"
+                    Message = "Unsupported transaction type"
                 };
             }
 

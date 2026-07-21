@@ -3,49 +3,67 @@ namespace TopUp
 {
     public class SwitchService : ISwitchService
     {
-        private readonly IQueueService _queueService;
-        private readonly IShaparakService _shaparakService;
+        
 
-        public SwitchService(IQueueService queueService, IShaparakService shaparakService)
-        {
-            _queueService = queueService;
-            _shaparakService = shaparakService;
-        }
-
-        public Task AdviceAsync(Guid transactionId)
-        {
-            //return _shaparakService.AdviceAsync()
-            Console.WriteLine($"Advice sent for {transactionId}");
-            return Task.CompletedTask;
-        }
-
-        public Task ProcessPurchaseAsync(Transaction transaction)
+        public Task<OperationResponse> ProcessAsync(Transaction transaction)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<TransactionResponse> ProcessTopupAsync(Transaction transaction)
-        {
-            var paymentResult = await _shaparakService.PurchaseAsync(transaction);
-            if (!paymentResult.IsSuccess)
-            {
-                return paymentResult;
-            }
+        //private readonly IQueueService _queueService;
+        //private readonly ILogger<SwitchService> _logger;
+        //private readonly IShaparakService _shaparakService;
 
-            await _queueService.EnqueueAsync<Transaction>("Topup", transaction);
+        //public SwitchService(IQueueService queueService, IShaparakService shaparakService, ILogger<SwitchService> logger)
+        //{
+        //    _logger = logger;
+        //    _queueService = queueService;
+        //    _shaparakService = shaparakService;
+        //}
 
-            return new TransactionResponse
-            {
-                IsSuccess = true,
-                Message = "Payment successful. Topup pending",
-                ReferenceNumber = transaction.Id
-            };
-        }
+        //public async Task<OperationResponse> AdviceAsync(Transaction transaction)
+        //    => await _shaparakService.AdviceAsync(transaction);
 
-        public Task ReverseAsync(Guid transactionId)
-        {
-            Console.WriteLine($"Reverse sent for {transactionId}");
-            return Task.CompletedTask;
-        }
+        //public async Task<OperationResponse> ProcessPurchaseAsync(Transaction transaction)
+        //    => await _shaparakService.PurchaseAsync(transaction);
+
+        //public async Task<OperationResponse> ProcessTopupAsync(Transaction transaction)
+        //{
+        //    var purchaseResult = await _shaparakService.PurchaseAsync(transaction);
+        //    if (!purchaseResult.IsSuccess) return purchaseResult;
+
+        //    try
+        //    {
+        //        await _queueService.EnqueueAsync<TopupRequest>("Topup", new TopupRequest
+        //        {
+        //            Amount = transaction.Amount,
+        //            Mobile = transaction.MobileNo,
+        //            TransactionId = transaction.Id
+        //        });
+
+        //        return new OperationResponse
+        //        {
+        //            IsSuccess = true,
+        //            Message = "Payment successful. Topup pending",
+        //            ReferenceNumber = purchaseResult.ReferenceNumber
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, $"Topup enqueue failed for transaction {transaction.Id}");
+        //        var reverseResult = await _shaparakService.ReverseAsync(transaction);
+
+        //        return new OperationResponse
+        //        {
+        //            IsSuccess = false,
+        //            Message = reverseResult.IsSuccess
+        //            ? "Payment reversed"
+        //            : "Payment successful but reverse failed"
+        //        };
+        //    }
+        //}
+
+        //public async Task<OperationResponse> ReverseAsync(Transaction transaction)
+        //    => await _shaparakService.ReverseAsync(transaction);       
     }
 }

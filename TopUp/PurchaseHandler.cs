@@ -3,17 +3,13 @@ namespace TopUp
 {
     public class PurchaseHandler : ITransactionHandler
     {
-        private readonly ISwitchService _switchService;
+        private readonly IShaparakService _shaparakService;
         public TransactionType Type => TransactionType.Purchase;
 
-        public PurchaseHandler(ISwitchService switchService)
-        {
-            _switchService = switchService;
-        }
+        public PurchaseHandler(IShaparakService shaparakService)
+            => _shaparakService = shaparakService;
 
-        public async Task<TransactionResponse> HandleAsync(Transaction transaction)
-        {
-            return await _switchService.ProcessPurchaseAsync(transaction);
-        }
+        public async Task<OperationResponse> HandleAsync(Transaction transaction)
+            => await _shaparakService.PurchaseAsync(transaction);
     }
 }

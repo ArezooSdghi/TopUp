@@ -2,9 +2,9 @@
 {
     public class TopupRequest
     {
+        public string? Mobile { get; set; } 
         public int RetryCount { get; set; }
-        public required string Mobile { get; set; }
-        public required decimal Amount { get; set; }
-        public required Guid TransactionId { get; set; }
+        public decimal Amount { get; set; }
+        public Guid TransactionId { get; set; }
     }
 }

@@ -3,6 +3,6 @@
     public interface ITransactionHandler
     {
         TransactionType Type { get; }
-        Task HandleAsync(Transaction transaction);
+        Task<OperationResponse> HandleAsync(Transaction transaction);
     }
 }
