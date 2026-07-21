@@ -1,6 +1,6 @@
 ﻿namespace PaymentSwitch.Infrastructure.Queue
 {
-    public enum QueueName
+    public enum QueueNames
     {
         Topup,
         Reverse,

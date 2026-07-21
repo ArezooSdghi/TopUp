@@ -1,4 +1,6 @@
 ﻿
+using PaymentSwitch.Infrastructure.Queue;
+
 namespace TopUp
 {
     public class TopupHandler : ITransactionHandler
@@ -21,14 +23,7 @@ namespace TopUp
             var result = await _shaparakService.PurchaseAsync(transaction);
             if (!result.IsSuccess) return result;
 
-            await _queueService.EnqueueAsync<TopupRequest>(
-                "Topup",
-                new TopupRequest
-                {
-                    Amount = transaction.Amount,
-                    Mobile = transaction.MobileNo,
-                    TransactionId = transaction.Id
-                });
+            await _queueService.EnqueueAsync<Transaction>(nameof(QueueNames.Topup), transaction);
 
             return new OperationResponse
             {

@@ -48,46 +48,5 @@ namespace PaymentSwitch.Infrastructure.Workers
                 await Task.Delay(500);
             }
         }
-
-
-        //    protected override Task ExecuteAsync(CancellationToken stoppingToken)
-        //    {
-        //        while (!stoppingToken.IsCancellationRequested)
-        //        {
-
-        //            // Check Success Queue
-
-        //            //var message =
-        //            //    await _queue.DequeueAsync<Transaction>(
-        //            //        "Success");
-
-
-        //            //if (message is null)
-        //            //{
-        //            //    continue;
-        //            //}
-
-        //            //await _switch.AdviceAsync(
-        //            //        successRequest.TransactionId);
-
-
-
-        //            //// Check Failed Queue
-
-        //            //var failedRequest =
-        //            //    await _queue.DequeueAsync<TopupRequest>(
-        //            //        "Failed");
-
-
-        //            //if (failedRequest != null)
-        //            //{
-        //            //    await _switch.ReverseAsync(
-        //            //        failedRequest.TransactionId);
-        //            //}
-
-
-
-        //            ///*await Task.Delay(500);*/
-        //        }
-        //}
     }
+}
