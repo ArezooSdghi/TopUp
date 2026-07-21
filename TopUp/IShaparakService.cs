@@ -2,8 +2,8 @@
 {
     public interface IShaparakService
     {
-        Task AdviceAsync(Transaction transaction);
-        Task ReverseAsync(Transaction transaction);
-        Task<TransactionResponse> PurchaseAsync(Transaction transaction);
+        Task<OperationResponse> AdviceAsync(Transaction transaction);
+        Task<OperationResponse> ReverseAsync(Transaction transaction);
+        Task<OperationResponse> PurchaseAsync(Transaction transaction);
     }
 }

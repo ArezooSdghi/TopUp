@@ -1,6 +1,6 @@
 ﻿namespace TopUp
 {
-    public class TransactionResponse
+    public class OperationResponse
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; } = default!;
