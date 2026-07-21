@@ -6,6 +6,9 @@ namespace TopUp
     {
         private readonly IQueueService _queue;
         private readonly ISwitchService _switch;
+        private const string AdviceQueue = "Advice";
+        private const string ReverseQueue = "Reverse";
+        
 
         public SwitchWorker(
             IQueueService queue,
@@ -25,16 +28,18 @@ namespace TopUp
 
                 // Check Success Queue
 
-                var successRequest =
-                    await _queue.DequeueAsync<TopupRequest>(
+                var message =
+                    await _queue.DequeueAsync<Transaction>(
                         "Success");
 
 
-                if (successRequest != null)
+                if (message is null)
                 {
-                    await _switch.AdviceAsync(
-                        successRequest.TransactionId);
+                    continue;
                 }
+
+                await _switch.AdviceAsync(
+                        successRequest.TransactionId);
 
 
 
