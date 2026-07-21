@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TopUp;
+using PaymentSwitch.Application.Interfaces;
+using PaymentSwitch.Domain.Entities;
 
 namespace PaymentSwitch.Infrastructure.Workers
 {

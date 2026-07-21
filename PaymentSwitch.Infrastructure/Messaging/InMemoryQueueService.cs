@@ -23,5 +23,15 @@ namespace PaymentSwitch.Infrastructure.Messaging
 
             return Task.FromResult(default(T));
         }
+
+        public IEnumerable<T> GetAll<T>(string queueName)
+        {
+            if (_queues.TryGetValue(queueName, out var queue))
+            {
+                return queue.OfType<T>().ToList();
+            }
+
+            return Enumerable.Empty<T>();
+        }
     }
 }

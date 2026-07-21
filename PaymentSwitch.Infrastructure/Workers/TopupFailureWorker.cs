@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using PaymentSwitch.Infrastructure.Queue;
-using TopUp;
+using PaymentSwitch.Application.Common.Constants;
+using PaymentSwitch.Application.Interfaces;
 
 namespace PaymentSwitch.Infrastructure.Workers
 {

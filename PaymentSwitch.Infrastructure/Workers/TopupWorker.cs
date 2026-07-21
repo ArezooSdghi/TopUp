@@ -1,7 +1,11 @@
 ﻿using Microsoft.Extensions.Hosting;
-using PaymentSwitch.Infrastructure.Queue;
+using PaymentSwitch.Application.Common.Constants;
+using PaymentSwitch.Application.Dtos;
+using PaymentSwitch.Application.Interfaces;
+using PaymentSwitch.Domain.Entities;
+using PaymentSwitch.Domain.Enums;
 
-namespace TopUp
+namespace PaymentSwitch.Infrastructure.Workers
 {
     public class TopupWorker : BackgroundService
     {
@@ -44,6 +48,7 @@ namespace TopUp
 
             if (isSuccess)
             {
+                transaction.Type = TransactionType.Advice;
                 await _queueService.EnqueueAsync(nameof(QueueNames.Advice), transaction);
                 return;
             }
@@ -55,6 +60,7 @@ namespace TopUp
                 return;
             }
 
+            transaction.Type = TransactionType.Reverse;
             await _queueService.EnqueueAsync(nameof(QueueNames.Reverse), transaction);
         }
     }

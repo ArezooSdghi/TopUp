@@ -31,9 +31,7 @@ namespace PaymentSwitch.Application.Services
         public async Task<OperationResponse> PurchaseAsync(Transaction transaction)
         {
             _logger.LogInformation($"Purchase Request | TransactionId:{transaction.Id}");
-
-            await Task.Delay(1000);
-
+            
             return new OperationResponse
             {
                 IsSuccess = true,

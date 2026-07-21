@@ -9,8 +9,9 @@ namespace PaymentSwitch.Application.Services
 
         public async Task<bool> ChargeAsync(TopupRequest request)
         {
-            await Task.Delay(1000);
-            return _random.Next(0, 100) > 30;
+            return false;
+            //await Task.Delay(1000);
+            //return _random.Next(0, 100) < 30;
         }
     }
 }

@@ -4,7 +4,7 @@ using PaymentSwitch.Domain.Entities;
 
 namespace PaymentSwitch.Application.Dispatchers
 {
-    public class TransactionDispatcher
+    public class TransactionDispatcher : ITransactionDispatcher
     {
         private readonly IEnumerable<ITransactionHandler> _handlers;
 

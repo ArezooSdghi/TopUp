@@ -14,6 +14,6 @@ namespace PaymentSwitch.Application.Handlers
             => _shaparakService = shaparakService;
 
         public Task<OperationResponse> HandleAsync(Transaction transaction)
-            => _shaparakService.ReverseAsync(transaction);
+            => _shaparakService.AdviceAsync(transaction);
     }
 }
