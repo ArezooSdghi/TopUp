@@ -1,4 +1,9 @@
-﻿namespace TopUp
+﻿using PaymentSwitch.Application.Common.Models;
+using PaymentSwitch.Application.Interfaces;
+using PaymentSwitch.Domain.Entities;
+using PaymentSwitch.Domain.Enums;
+
+namespace PaymentSwitch.Application.Handlers
 {
     public class AdviceHandler : ITransactionHandler
     {

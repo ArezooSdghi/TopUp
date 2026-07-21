@@ -1,4 +1,4 @@
-﻿namespace TopUp
+﻿namespace PaymentSwitch.Application.Interfaces
 {
     public interface IQueueService
     {

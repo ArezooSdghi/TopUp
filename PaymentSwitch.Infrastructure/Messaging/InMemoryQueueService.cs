@@ -1,7 +1,7 @@
-﻿
+﻿using PaymentSwitch.Application.Interfaces;
 using System.Collections.Concurrent;
 
-namespace TopUp
+namespace PaymentSwitch.Infrastructure.Messaging
 {
     public class InMemoryQueueService : IQueueService
     {

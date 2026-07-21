@@ -1,4 +1,4 @@
-﻿namespace PaymentSwitch.Infrastructure.Queue
+﻿namespace PaymentSwitch.Application.Common.Constants
 {
     public enum QueueNames
     {

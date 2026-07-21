@@ -1,7 +1,10 @@
-﻿
-using PaymentSwitch.Infrastructure.Queue;
+﻿using PaymentSwitch.Application.Common.Constants;
+using PaymentSwitch.Application.Common.Models;
+using PaymentSwitch.Application.Interfaces;
+using PaymentSwitch.Domain.Entities;
+using PaymentSwitch.Domain.Enums;
 
-namespace TopUp
+namespace PaymentSwitch.Application.Handlers
 {
     public class TopupHandler : ITransactionHandler
     {

@@ -1,4 +1,4 @@
-﻿namespace TopUp
+﻿namespace PaymentSwitch.Domain.Enums
 {
     public enum TransactionType
     {

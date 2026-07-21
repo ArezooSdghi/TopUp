@@ -1,4 +1,6 @@
-﻿namespace TopUp
+﻿using PaymentSwitch.Application.Dtos;
+
+namespace PaymentSwitch.Application.Interfaces
 {
     public interface ITopupService
     {

@@ -1,4 +1,4 @@
-﻿namespace TopUp
+﻿namespace PaymentSwitch.Application.Common.Models
 {
     public class OperationResponse
     {

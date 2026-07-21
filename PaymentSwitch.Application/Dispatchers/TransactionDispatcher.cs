@@ -1,4 +1,8 @@
-﻿namespace TopUp
+﻿using PaymentSwitch.Application.Common.Models;
+using PaymentSwitch.Application.Interfaces;
+using PaymentSwitch.Domain.Entities;
+
+namespace PaymentSwitch.Application.Dispatchers
 {
     public class TransactionDispatcher
     {
@@ -19,7 +23,7 @@
                 };
             }
 
-            return await handler.HandleAsync(transaction) .HandleAsync(transaction);
+            return await handler.HandleAsync(transaction);
         }
     }
 }

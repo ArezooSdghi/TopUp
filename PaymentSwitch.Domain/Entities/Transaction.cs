@@ -1,4 +1,6 @@
-﻿namespace TopUp
+﻿using PaymentSwitch.Domain.Enums;
+
+namespace PaymentSwitch.Domain.Entities
 {
     public class Transaction
     {

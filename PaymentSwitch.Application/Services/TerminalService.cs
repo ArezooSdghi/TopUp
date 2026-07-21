@@ -1,5 +1,6 @@
-﻿using PaymentSwitch.Application.Interfaces;
-using TopUp;
+﻿using PaymentSwitch.Application.Common.Models;
+using PaymentSwitch.Application.Interfaces;
+using PaymentSwitch.Domain.Entities;
 
 namespace PaymentSwitch.Application.Services
 {
