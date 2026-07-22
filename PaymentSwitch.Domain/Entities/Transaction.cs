@@ -10,5 +10,6 @@ namespace PaymentSwitch.Domain.Entities
         public string? MobileNo { get; set; }
         public string? CardNumber { get; set; }
         public TransactionType Type { get; set; }
+        public TransactionStatus Status { get; set; }
     }
 }

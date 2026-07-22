@@ -27,7 +27,7 @@ namespace PaymentSwitch.Application.Handlers
             var result = await _shaparakService.PurchaseAsync(transaction);
             if (!result.IsSuccess) return result;
 
-            await _queueService.EnqueueAsync<TransactionDto>(nameof(QueueNames.Topup), transaction);
+            await _queueService.EnqueueAsync(nameof(QueueNames.Topup), transaction);
 
             return new OperationResponse
             {

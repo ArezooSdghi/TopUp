@@ -4,14 +4,14 @@ using PaymentSwitch.Application.Interfaces;
 
 namespace PaymentSwitch.Infrastructure.Workers
 {
-    public class TopupFailureWorker : TopupTransactionWorker
+    public class TopupFailureWorker : TopupBaseWorker
     {
         protected override string QueueName => nameof(QueueNames.Reverse);
 
         public TopupFailureWorker(
             IQueueService queueService,
             ITransactionDispatcher dispatcher,
-            ILogger<TopupTransactionWorker> logger)
+            ILogger<TopupBaseWorker> logger)
             : base(queueService, dispatcher, logger)
         {
         }

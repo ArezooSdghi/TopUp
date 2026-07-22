@@ -12,5 +12,6 @@ namespace PaymentSwitch.Application.Dtos
         public string? CardNumber { get; set; }
         public TransactionType Type { get; set; }
         public TransactionStep Step { get; set; }
+        public TransactionStatus Status { get; set; }
     }
 }

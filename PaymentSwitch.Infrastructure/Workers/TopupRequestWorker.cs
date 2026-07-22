@@ -6,13 +6,13 @@ using PaymentSwitch.Domain.Enums;
 
 namespace PaymentSwitch.Infrastructure.Workers
 {
-    public class TopupWorker : BackgroundService
+    public class TopupRequestWorker : BackgroundService
     {
         private const int MaxRetryCount = 3;
         private readonly IQueueService _queueService;
         private readonly ITopupService _topupService;
 
-        public TopupWorker(
+        public TopupRequestWorker(
             IQueueService queueService,
             ITopupService topupService)
         {
@@ -48,6 +48,7 @@ namespace PaymentSwitch.Infrastructure.Workers
             if (isSuccess)
             {
                 transaction.Step = TransactionStep.Advice;
+                transaction.Status = TransactionStatus.Success;
                 await _queueService.EnqueueAsync(nameof(QueueNames.Advice), transaction);
                 return;
             }
@@ -55,12 +56,12 @@ namespace PaymentSwitch.Infrastructure.Workers
             transaction.RetryCount++;
             if (transaction.RetryCount < MaxRetryCount)
             {
-                transaction.Step = TransactionStep.Execute;
                 await _queueService.EnqueueAsync(nameof(QueueNames.Topup), transaction);
                 return;
             }
 
             transaction.Step = TransactionStep.Reverse;
+            transaction.Status = TransactionStatus.Failed;
             await _queueService.EnqueueAsync(nameof(QueueNames.Reverse), transaction);
         }
     }

@@ -25,7 +25,7 @@ services.AddSingleton<ITransactionHandler, AdviceHandler>();
 services.AddSingleton<ITransactionHandler, ReverseHandler>();
 services.AddSingleton<ITransactionHandler, PurchaseHandler>();
 
-services.AddSingleton<TopupWorker>();
+services.AddSingleton<TopupRequestWorker>();
 services.AddSingleton<TopupSuccessWorker>();
 services.AddSingleton<TopupFailureWorker>();
 
