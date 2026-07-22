@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PaymentSwitch.Application.Common.Constants;
 using PaymentSwitch.Application.Dispatchers;
+using PaymentSwitch.Application.Dtos;
 using PaymentSwitch.Application.Handlers;
 using PaymentSwitch.Application.Interfaces;
 using PaymentSwitch.Application.Services;
@@ -39,7 +40,7 @@ var transaction = new Transaction
     Amount = 100000,
     Id = Guid.NewGuid(),
     TerminalId = 123456,
-    Type = TransactionType.Topup,
+    Type = TransactionType.Purchase,
     CardNumber = "1234567890123456"
 };
 
@@ -50,34 +51,39 @@ var result = await switchService.ProcessAsync(transaction);
 
 var queueService = provider.GetRequiredService<IQueueService>();
 
-var topupTransactions = queueService.GetAll<Transaction>(nameof(QueueNames.Topup));
-
-var TopUpworker = provider.GetRequiredService<TopupWorker>();
-
-await TopUpworker.StartAsync(CancellationToken.None);
-
-Console.WriteLine("Topup Worker started");
-
-await Task.Delay(1000);
-
-await TopUpworker.StopAsync(CancellationToken.None);
-
-var failedTransactions = queueService.GetAll<Transaction>(nameof(QueueNames.Reverse));
-var successTransactions = queueService.GetAll<Transaction>(nameof(QueueNames.Advice));
 
 //await queueService.EnqueueAsync(
-//    nameof(QueueNames.Advice),
+//    nameof(QueueNames.Topup)),
 //    transaction);
 
-var TopUpSuccessWorker = provider.GetRequiredService<TopupFailureWorker>();
+var topupTransactions = queueService.GetAll<TransactionDto>(nameof(QueueNames.Topup));
 
-await TopUpSuccessWorker.StartAsync(CancellationToken.None);
+//var TopUpworker = provider.GetRequiredService<TopupWorker>();
 
-Console.WriteLine("Topup Worker started");
+//await TopUpworker.StartAsync(CancellationToken.None);
 
-await Task.Delay(5000);
+//Console.WriteLine("Topup Worker started");
 
-await TopUpSuccessWorker.StopAsync(CancellationToken.None);
+//await Task.Delay(20000);
+
+//await TopUpworker.StopAsync(CancellationToken.None);
+
+var failedTransactions = queueService.GetAll<TransactionDto>(nameof(QueueNames.Reverse));
+var successTransactions = queueService.GetAll<TransactionDto>(nameof(QueueNames.Advice));
+
+//await queueservice.enqueueasync(
+//    nameof(queuenames.advice),
+//    transaction);
+
+//var TopUpSuccessWorker = provider.GetRequiredService<TopupSuccessWorker>();
+
+//await TopUpSuccessWorker.StartAsync(CancellationToken.None);
+
+//Console.WriteLine("Topup Worker started");
+
+//await Task.Delay(60000);
+
+//await TopUpSuccessWorker.StopAsync(CancellationToken.None);
 
 
 foreach (var item in topupTransactions)

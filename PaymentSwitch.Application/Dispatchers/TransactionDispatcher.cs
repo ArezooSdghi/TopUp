@@ -1,6 +1,6 @@
 ﻿using PaymentSwitch.Application.Common.Models;
+using PaymentSwitch.Application.Dtos;
 using PaymentSwitch.Application.Interfaces;
-using PaymentSwitch.Domain.Entities;
 
 namespace PaymentSwitch.Application.Dispatchers
 {
@@ -11,9 +11,13 @@ namespace PaymentSwitch.Application.Dispatchers
         public TransactionDispatcher(IEnumerable<ITransactionHandler> handlers)
             => _handlers = handlers;
 
-        public async Task<OperationResponse> DispatchAsync(Transaction transaction)
+        public async Task<OperationResponse> DispatchAsync(TransactionDto transaction)
         {
-            var handler = _handlers.FirstOrDefault(x => x.Type == transaction.Type);
+            var handler = _handlers.FirstOrDefault(
+                x => transaction.Step != 0
+                ? x.Type.ToString() == transaction.Step.ToString()
+                : x.Type == transaction.Type);
+
             if (handler is null)
             {
                 return new OperationResponse

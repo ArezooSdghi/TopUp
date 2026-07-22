@@ -1,10 +1,10 @@
 ﻿using PaymentSwitch.Application.Common.Models;
-using PaymentSwitch.Domain.Entities;
+using PaymentSwitch.Application.Dtos;
 
 namespace PaymentSwitch.Application.Interfaces
 {
     public interface ITransactionDispatcher
     {
-        Task<OperationResponse> DispatchAsync(Transaction transaction);
+        Task<OperationResponse> DispatchAsync(TransactionDto transaction);
     }
 }

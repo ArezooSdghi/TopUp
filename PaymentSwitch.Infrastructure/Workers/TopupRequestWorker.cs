@@ -2,7 +2,6 @@
 using PaymentSwitch.Application.Common.Constants;
 using PaymentSwitch.Application.Dtos;
 using PaymentSwitch.Application.Interfaces;
-using PaymentSwitch.Domain.Entities;
 using PaymentSwitch.Domain.Enums;
 
 namespace PaymentSwitch.Infrastructure.Workers
@@ -25,7 +24,7 @@ namespace PaymentSwitch.Infrastructure.Workers
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var request = await _queueService.DequeueAsync<Transaction>(nameof(QueueNames.Topup));
+                var request = await _queueService.DequeueAsync<TransactionDto>(nameof(QueueNames.Topup));
 
                 if (request is null)
                 {
@@ -37,7 +36,7 @@ namespace PaymentSwitch.Infrastructure.Workers
             }
         }
 
-        private async Task ProcessRequestAsync(Transaction transaction)
+        private async Task ProcessRequestAsync(TransactionDto transaction)
         {
             var isSuccess = await _topupService.ChargeAsync(new TopupRequest
             {
@@ -48,7 +47,7 @@ namespace PaymentSwitch.Infrastructure.Workers
 
             if (isSuccess)
             {
-                transaction.Type = TransactionType.Advice;
+                transaction.Step = TransactionStep.Advice;
                 await _queueService.EnqueueAsync(nameof(QueueNames.Advice), transaction);
                 return;
             }
@@ -56,11 +55,12 @@ namespace PaymentSwitch.Infrastructure.Workers
             transaction.RetryCount++;
             if (transaction.RetryCount < MaxRetryCount)
             {
+                transaction.Step = TransactionStep.Execute;
                 await _queueService.EnqueueAsync(nameof(QueueNames.Topup), transaction);
                 return;
             }
 
-            transaction.Type = TransactionType.Reverse;
+            transaction.Step = TransactionStep.Reverse;
             await _queueService.EnqueueAsync(nameof(QueueNames.Reverse), transaction);
         }
     }

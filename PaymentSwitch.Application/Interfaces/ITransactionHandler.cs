@@ -1,5 +1,5 @@
 ﻿using PaymentSwitch.Application.Common.Models;
-using PaymentSwitch.Domain.Entities;
+using PaymentSwitch.Application.Dtos;
 using PaymentSwitch.Domain.Enums;
 
 namespace PaymentSwitch.Application.Interfaces
@@ -7,6 +7,6 @@ namespace PaymentSwitch.Application.Interfaces
     public interface ITransactionHandler
     {
         TransactionType Type { get; }
-        Task<OperationResponse> HandleAsync(Transaction transaction);
+        Task<OperationResponse> HandleAsync(TransactionDto transaction);
     }
 }

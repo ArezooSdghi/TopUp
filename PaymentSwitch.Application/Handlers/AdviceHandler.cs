@@ -1,6 +1,6 @@
 ﻿using PaymentSwitch.Application.Common.Models;
+using PaymentSwitch.Application.Dtos;
 using PaymentSwitch.Application.Interfaces;
-using PaymentSwitch.Domain.Entities;
 using PaymentSwitch.Domain.Enums;
 
 namespace PaymentSwitch.Application.Handlers
@@ -13,7 +13,7 @@ namespace PaymentSwitch.Application.Handlers
         public AdviceHandler(IShaparakService shaparakService)
             => _shaparakService = shaparakService;
 
-        public Task<OperationResponse> HandleAsync(Transaction transaction)
+        public Task<OperationResponse> HandleAsync(TransactionDto transaction)
             => _shaparakService.AdviceAsync(transaction);
     }
 }

@@ -1,20 +1,20 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PaymentSwitch.Application.Dtos;
 using PaymentSwitch.Application.Interfaces;
-using PaymentSwitch.Domain.Entities;
 
 namespace PaymentSwitch.Infrastructure.Workers
 {
-    public abstract class TopupTransactionWorker : BackgroundService
+    public abstract class TopupBaseWorker : BackgroundService
     {
         private readonly IQueueService _queueService;
         private readonly ITransactionDispatcher _dispatcher;
-        private readonly ILogger<TopupTransactionWorker> _logger;
+        private readonly ILogger<TopupBaseWorker> _logger;
 
-        public TopupTransactionWorker(
+        public TopupBaseWorker(
             IQueueService queueService,
             ITransactionDispatcher dispatcher,
-            ILogger<TopupTransactionWorker> logger)
+            ILogger<TopupBaseWorker> logger)
         {
             _logger = logger;
             _dispatcher = dispatcher;
@@ -31,7 +31,7 @@ namespace PaymentSwitch.Infrastructure.Workers
             {
                 try
                 {
-                    var transaction = await _queueService.DequeueAsync<Transaction>(QueueName);
+                    var transaction = await _queueService.DequeueAsync<TransactionDto>(QueueName);
 
                     if (transaction is null)
                     {

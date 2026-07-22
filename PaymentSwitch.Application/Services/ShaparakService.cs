@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using PaymentSwitch.Application.Common.Models;
+using PaymentSwitch.Application.Dtos;
 using PaymentSwitch.Application.Interfaces;
-using PaymentSwitch.Domain.Entities;
 
 namespace PaymentSwitch.Application.Services
 {
@@ -14,7 +14,7 @@ namespace PaymentSwitch.Application.Services
             _logger = logger;
         }
 
-        public async Task<OperationResponse> AdviceAsync(Transaction transaction)
+        public async Task<OperationResponse> AdviceAsync(TransactionDto transaction)
         {
             _logger.LogInformation($"Advice Request | TransactionId:{transaction.Id}");
 
@@ -28,10 +28,12 @@ namespace PaymentSwitch.Application.Services
             };
         }
 
-        public async Task<OperationResponse> PurchaseAsync(Transaction transaction)
+        public async Task<OperationResponse> PurchaseAsync(TransactionDto transaction)
         {
             _logger.LogInformation($"Purchase Request | TransactionId:{transaction.Id}");
-            
+
+            await Task.Delay(500);
+
             return new OperationResponse
             {
                 IsSuccess = true,
@@ -40,7 +42,7 @@ namespace PaymentSwitch.Application.Services
             };
         }
 
-        public async Task<OperationResponse> ReverseAsync(Transaction transaction)
+        public async Task<OperationResponse> ReverseAsync(TransactionDto transaction)
         {
             _logger.LogInformation($"Reverse Request | TransactionId:{transaction.Id}");
 
